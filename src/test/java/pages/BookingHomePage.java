@@ -9,12 +9,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
-public class BookingHomePage extends BasePage{
+public class BookingHomePage extends BasePage {
     WebDriver driver;
     WebDriverWait wait;
 
     public BookingHomePage(WebDriver driver, WebDriverWait wait) {
-        super(driver,wait);
+        super(driver, wait);
         this.driver = driver;
         this.wait = wait;
         PageFactory.initElements(driver, this);
@@ -34,22 +34,56 @@ public class BookingHomePage extends BasePage{
     @FindBy(xpath = "//div[@data-bui-ref='calendar-next']")
     WebElement next;
 
-    public void selectLanguage(String language){
+    @FindBy(css = "#xp__guests__toggle")
+    WebElement accommodation;
+
+    @FindBy ( css=".sb-group__field.sb-group__field-adults > div > .bui-stepper__wrapper> .bui-button--secondary.bui-stepper__add-button")
+    WebElement adults;
+
+    @FindBy(css = ".sb-group__field.sb-group-children > div > div.bui-stepper__wrapper>.bui-button--secondary.bui-stepper__add-button")
+    WebElement childrenNumber;
+
+    @FindBy(css =".sb-group__children__field.clearfix > select")
+    WebElement childrenAge;
+
+    //#xp__guests__inputs-container > div > div > div.sb-group__children__field.clearfix > select
+
+    @FindBy(css = ".sb-group__field.sb-group__field-rooms > div > div.bui-stepper__wrapper> .bui-button--secondary.bui-stepper__add-button")
+    WebElement unit;
+
+    @FindBy(css = ".xp__button")
+    WebElement searchButton;
+
+    @FindBy(css = "//*[@class='c-autocomplete__input sb-searchbox__input sb-destination__input']")
+    WebElement name;
+
+    @FindBy(css =".sb-dates__col.--checkin-field> div .sb-date-field__display")
+    WebElement dateOfEntry;
+
+    @FindBy(css =".sb-dates__col.--checkout-field> div .sb-date-field__display")
+    WebElement dateOfExit;
+
+    public void selectLanguage(String language) {
         click(languageIcon);
         click(driver.findElement(By.xpath(languageLinkXpath.replace("$", language))));
     }
 
-    public void enterLocation(String locationValue){
+    public void enterLocation(String locationValue) {
         typeText(location, locationValue);
+    }
+
+    public void assertName(WebElement name, String nameText) {
+        assertEquals(name, nameText);
     }
 
 
     /**
      * Selects start and end date
+     *
      * @param startDate format DD month YYYY
-     * @param endDate format DD month YYYY
+     * @param endDate   format DD month YYYY
      */
-    public void selectDates(String startDate, String endDate){
+    public void selectDates(String startDate, String endDate) {
         click(dates);
 
         while (true) {
@@ -75,4 +109,30 @@ public class BookingHomePage extends BasePage{
         }
     }
 
+
+    public void clickAccommodation() {
+        click(accommodation);
+    }
+
+    public void clickAdults(){
+        click(adults);
+    }
+
+    public void clickChildrenNumber() {
+        click(childrenNumber);
+    }
+
+    public void selectChildrenAge() {
+        selectByValue(childrenAge,"1");
+    }
+
+    public void clickUnit(){
+        click(unit);
+    }
+
+    public void clickSearchButton() {
+        click(searchButton);
+    }
+
 }
+
